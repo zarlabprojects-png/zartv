@@ -1,0 +1,15 @@
+/
+  Link: </za-live.jpg>; rel=preload; as=image
+  Link: <https://cdnjs.cloudflare.com>; rel=preconnect
+/index.html
+  Cache-Control: no-cache
+/sw.js
+  Cache-Control: no-cache
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+/icon-*.png
+  Cache-Control: public, max-age=604800
+/za-*.jpg
+  Cache-Control: public, max-age=604800

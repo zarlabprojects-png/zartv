@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover"><script>/* phone: fixed 500px layout, scaled by the browser to the screen. PC/tablet: device width */
+(function(){try{var m=Math.min(screen.width,screen.height);if(matchMedia("(pointer:coarse)").matches&&m<600){document.querySelector('meta[name=viewport]').setAttribute("content","width=500, user-scalable=no, viewport-fit=cover")}}catch(e){}})()</script>
+<title>ZAR TV</title>
+<meta name="theme-color" content="#171533">
+<meta name="format-detection" content="telephone=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ZAR TV">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+<link rel="preload" as="image" href="za-live.jpg"><link rel="preconnect" href="https://cdnjs.cloudflare.com"><link rel="dns-prefetch" href="https://wsrv.nl"><link rel="dns-prefetch" href="https://iptv-org.github.io"><link rel="dns-prefetch" href="https://raw.githubusercontent.com">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js" onerror="var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js';document.head.appendChild(s)"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body,button,input,.card{touch-action:pan-x pan-y}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--cw:78px;height:100%;height:100dvh;-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior:none}
+body{--bg:#171533;--surf:#201d42;--sd:#0b0a1e;--sl:#302c5c;--text:#f4f1ff;--mute:#b3afdf;--ac:#ff4fa3;--act:#ffc233;--red:#ff4d6d;--now:#ffe08a;font-family:"Noto Sans Bengali","Hind Siliguri",system-ui,sans-serif;color:var(--text);height:100%;overflow-x:hidden;background:radial-gradient(circle at 8% 0%,rgba(255,45,149,.28),transparent 42%),radial-gradient(circle at 100% 8%,rgba(0,190,230,.26),transparent 42%),radial-gradient(circle at 50% 100%,rgba(122,92,255,.32),transparent 55%),radial-gradient(circle at 0% 70%,rgba(255,150,30,.14),transparent 40%),#171533}
+body.light{--bg:#f4ecff;--surf:#f4ecff;--sd:#d6c8f1;--sl:#ffffff;--text:#2a1646;--mute:#6d5a90;--act:#d6176f;--now:#b4236f;background:radial-gradient(circle at 8% 0%,rgba(255,105,180,.32),transparent 42%),radial-gradient(circle at 100% 8%,rgba(60,200,255,.30),transparent 42%),radial-gradient(circle at 50% 100%,rgba(160,120,255,.34),transparent 55%),radial-gradient(circle at 0% 70%,rgba(255,190,70,.25),transparent 40%),#f4ecff}
+button,input{font-family:inherit}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+#app{height:100%;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+img,svg{max-width:100%}
+header{display:flex;align-items:center;gap:10px;padding:10px 14px 6px}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto;min-width:0}
+.lgo{position:relative;flex:none;cursor:pointer;overflow:hidden;font-weight:900;font-size:24px;line-height:1;letter-spacing:2px;color:#fff;background:linear-gradient(135deg,#00a86b,#00b8a9 55%,#2f80ff);border:1px solid rgba(255,255,255,.55);padding:8px 18px 8px 46px;border-radius:14px}
+.lgo .zsun{position:absolute;left:14px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff7a8a,#f42a41);box-shadow:0 0 12px rgba(244,42,65,.8);z-index:0}
+.lgo .zn{position:relative;z-index:1;display:inline-block}
+.lgo small{position:relative;z-index:1;display:block;font-size:8px;letter-spacing:5px;margin-top:3px;font-weight:600;color:#fff6b0}
+.lgo .zn i{font-style:normal;display:inline-block}
+.lgo .zn i:nth-child(2){color:#ffe66d}
+.lgo .zn i:nth-child(3){color:#ffb3d9}
+.sub{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--mute);font-weight:700;letter-spacing:2px;background:linear-gradient(90deg,#ffc233,#ff4fa3,#a78bfa,#2fd0f0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red)}
+.ib{flex:none;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ib,#bI{background:var(--nb,var(--bg));border:none;border-radius:14px;box-shadow:6px 6px 12px var(--sd),-6px -6px 12px var(--sl)}
+#bI{display:flex;width:auto;padding:0 18px;font-size:14px;font-weight:700;white-space:nowrap;color:#10b981}
+#bF{width:auto;padding:0 14px;font-size:13px;font-weight:700;white-space:nowrap;color:#06b6d4}
+#bR{color:#f59e0b}
+#bT{color:#a855f7}
+#cgo{color:#22c55e}
+#crs{color:#f43f5e}
+.stage{flex:1;min-height:0;display:flex;flex-direction:column}
+.pl{padding:0 14px}
+.vb{position:relative;width:100%;aspect-ratio:16/9;max-height:32vh;margin:0 auto;border:3px solid transparent;border-radius:20px;overflow:hidden;background:linear-gradient(#000,#000) padding-box,linear-gradient(135deg,#ff2d95,#ff7a1a,#ffd23f,#2fd47f,#00a8cc,#7a5cff) border-box}
+video{width:100%;height:100%;display:block;background:#000;object-fit:contain;max-width:100%}
+#now{flex:1;min-width:0;padding:0 4px;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--now)}
+.nr{display:flex;align-items:center;gap:8px;margin:10px 2px 8px}
+.ch{flex:1;min-height:0;display:flex;flex-direction:column;padding-top:10px}
+.sr{display:flex;align-items:center;gap:8px;padding:0 14px 4px}
+.sw{position:relative;flex:1}
+.sw svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#ff4fa3}
+#search{width:100%;height:40px;padding:0 14px 0 44px;border-radius:999px;border:none;background:var(--surf);box-shadow:inset 0 0 0 1px var(--sl),inset 3px 3px 7px var(--sd);color:var(--text);font-size:14px;outline:none}
+#search:focus{box-shadow:0 0 0 2px #ff4fa3,0 0 0 6px rgba(255,79,163,.25)}
+.row{display:flex;overflow-x:auto;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+#servers{flex:none;border-radius:12px;background:var(--nb,var(--bg));box-shadow:inset 3px 3px 6px var(--sd),inset -3px -3px 6px var(--sl);padding:4px;gap:4px}
+.srv{flex:none;min-width:34px;padding:6px 11px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;background:transparent;border:none;color:var(--mute)}
+.srv.na{opacity:.35}
+.chip.on,.srv.on{font-weight:800}
+.srv.on{background:linear-gradient(135deg,#ff4fa3,#7a5cff);color:#fff}
+#cst{padding:0 16px 2px;font-size:11px;color:var(--mute)}
+#cst:empty{display:none}
+#cats{gap:8px;padding:6px 14px}
+.chip{flex:none;padding:7px 15px;font-size:13px;font-weight:700;cursor:pointer;background:var(--nb,var(--bg));border:none;border-radius:999px;color:var(--cc,var(--mute));box-shadow:4px 4px 9px var(--sd),-4px -4px 9px var(--sl)}
+.chip::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;background:var(--cc);vertical-align:1px}
+.chip.on{background:linear-gradient(135deg,var(--a),var(--b));color:#fff}
+.chip.on::before{background:#fff}
+body.light .chip:not(.on){color:var(--a)}
+.chip .cn{margin-left:7px;padding:1px 6px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(128,128,128,.22)}
+.chip.on .cn{background:rgba(255,255,255,.28)}
+.chip.on,#zok,#lok,#dok,#zad,#lcam,#lgo,#ddn{box-shadow:none!important}
+.ib:active,#bI:active,.abx:active,.di button:active,.chip:active,.srv:not(.on):active{box-shadow:inset 3px 3px 7px var(--sd),inset -3px -3px 7px var(--sl)}
+#grid{flex:1;overflow-y:auto;contain:content;padding:4px 12px 20px;display:grid;gap:8px;align-content:start;grid-template-columns:repeat(auto-fill,minmax(var(--cw),1fr));overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#ff4fa3 transparent}
+.card{position:relative;display:flex;flex-direction:column;gap:4px;padding:4px;border-radius:18px;cursor:pointer;background:var(--surf);border:1.5px solid var(--cc,var(--sl))}
+.card.on{outline:2px solid var(--act);outline-offset:-2px}
+body:not(.light) .card.on{border-color:var(--act)}
+.card.on::before{content:"";position:absolute;left:8px;top:8px;width:18px;height:16px;z-index:3;border-radius:5px;padding:2px;background:linear-gradient(#fff,#fff) 3px 100%/3px 40% no-repeat,linear-gradient(#fff,#fff) 8px 100%/3px 70% no-repeat,linear-gradient(#fff,#fff) 13px 100%/3px 50% no-repeat,rgba(0,0,0,.45);pointer-events:none}
+.ini{position:relative;overflow:hidden;flex:none;width:100%;aspect-ratio:1/1;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:26px;background:linear-gradient(135deg,var(--cc),var(--c2))}
+.card[data-id="Bangla|ZA DVD"] .ini{background:linear-gradient(135deg,#2563eb,#6d28d9)!important}
+.card .ini.lg{background:#fff!important;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.ini.lg span{display:none}
+.ini img{position:absolute;left:10%;right:10%;top:10%;bottom:10%;width:80%;height:80%;object-fit:contain;object-position:center;border-radius:0}
+.card[data-id="Bangla|ZA লাইভ"] .ini img,.card[data-id="Bangla|ZA DVD"] .ini img{left:0;right:0;top:0;bottom:0;width:100%;height:100%;object-fit:cover;border-radius:14px}
+.lbl{flex:none;margin:0;padding:4px 3px;border-radius:9px;color:#fff;font-size:10px;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:linear-gradient(90deg,var(--cc),var(--c2))}
+.card.on .lbl{color:#2a1030}
+.empty{grid-column:1/-1;text-align:center;color:var(--mute);padding:40px 10px}
+.abc{--nb:var(--surf);background:linear-gradient(180deg,rgba(255,79,163,.16),rgba(122,92,255,.10) 45%,transparent 75%),var(--surf);color:var(--text);border-radius:24px;padding:18px 18px 20px;max-width:min(92vw,400px);width:100%;text-align:center;border:1px solid rgba(255,255,255,.14);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
+.abc img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:top;border-radius:22px;display:block;margin:0 auto 16px;border:3px solid transparent;background:linear-gradient(var(--surf),var(--surf)) padding-box,linear-gradient(135deg,#ffc233,#ff4fa3,#7a5cff,#2fd0f0) border-box}
+.abc small{display:block;color:#ffc233;font-size:13px;font-weight:700;letter-spacing:1px;margin-bottom:6px}
+.abc b{font-size:22px;font-weight:800}
+.abx{margin-top:14px;cursor:pointer;font-family:inherit;background:var(--nb,var(--bg));border:none;color:#ff4fa3;border-radius:16px;padding:10px 24px;box-shadow:5px 5px 10px var(--sd),-5px -5px 10px var(--sl)}
+.abx:disabled,.lvr button:disabled{box-shadow:3px 3px 6px var(--sd),-3px -3px 6px var(--sl);color:var(--mute)}
+.abx.mu{color:var(--mute)}
+#zok,#lok,#dok,#zad,#lcam,#lgo,#ddn{background:linear-gradient(135deg,#ff4fa3,#7a5cff);color:#fff}
+.zr .abx,.lvr .abx{margin:0}
+#zm .abc{max-width:min(92vw,340px);text-align:left}
+#zm h3,#lm h3,#dm h3{margin:0 0 10px;font-size:16px;text-align:center;background:linear-gradient(90deg,#ffc233,#ff4fa3,#a78bfa);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.zi{width:100%;border:none;border-radius:12px;padding:11px 12px;margin:0 0 8px;font-family:inherit;background:var(--bg,#0003);color:inherit;box-shadow:inset 0 0 0 1px rgba(128,128,128,.35)}
+.zr{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+#zl2{max-height:26vh;overflow:auto}
+#zst{font-size:12px;color:var(--mute);margin:8px 0 0;min-height:16px;word-break:break-word}
+.zl{font-size:12px;color:var(--mute);margin:2px 0 6px}
+#lm .abc{max-width:min(92vw,380px);text-align:left}
+#lvb{position:relative;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;margin-bottom:8px}
+#lvv{width:100%;height:100%;object-fit:cover}
+#lvg{position:absolute;top:8px;left:8px;padding:2px 10px;border-radius:99px;background:#3a3f4c;color:#fff;font-size:12px}
+#lvg.on{background:#e0245e;box-shadow:0 0 10px #e0245e}
+#lst{font-size:13px;color:var(--mute);margin:6px 0;min-height:18px;word-break:break-word}
+.lvr{display:flex;gap:8px;margin-top:8px}
+.lvr button{flex:1}
+.lvr button:disabled{opacity:.45}
+#dm .abc{max-width:min(92vw,360px);text-align:left}
+.di{display:flex;gap:6px;align-items:center;border-radius:10px;padding:6px 8px;margin-bottom:6px;font-size:13px;background:var(--nb,var(--bg))}
+.di span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.di i{font-style:normal;font-size:11px;color:var(--mute);flex:none}
+.di button{width:28px;height:28px;color:var(--text);cursor:pointer;flex:none;background:var(--nb,var(--bg));border:none;border-radius:10px;box-shadow:3px 3px 6px var(--sd),-3px -3px 6px var(--sl)}
+#ab,#zm,#lm,#dm{position:fixed;inset:0;z-index:99;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));overflow-y:auto}
+#ab.on,#zm.on,#lm.on,#dm.on{display:flex}
+@media(min-width:900px){.stage{flex-direction:row;gap:32px;padding:12px 32px 32px}.pl{flex:1.55;min-width:0;padding:0;align-self:flex-start}.vb{max-height:none}.ch{flex:1;min-width:360px;padding:22px 0 0;border-radius:32px;background:var(--surf);overflow:hidden;--nb:var(--surf)}#grid{gap:12px;padding:14px 18px 24px}}
+@media(pointer:coarse){.ib{width:44px;height:44px}.chip,.srv{min-height:40px;display:inline-flex;align-items:center}#search{height:44px}.abx{min-height:44px}}
+@media(pointer:coarse),(max-width:768px){#search,.zi{font-size:16px}}
+@media(min-width:600px) and (max-width:899px){:root{--cw:92px}header{padding:14px 24px 8px}.lgo{font-size:28px;padding:10px 22px 10px 52px}.lgo .zsun{left:16px;width:23px;height:23px;margin-top:-11px}.sub{font-size:14px}.pl{padding:0 24px}.vb{max-height:46dvh}#now{font-size:17px}.sr{padding:0 24px 6px}#cats{padding:8px 24px 6px}#cst{padding:0 26px 2px;font-size:12px}#grid{gap:12px;padding:6px 24px 24px}.ini{font-size:30px}.chip{font-size:14px;padding:8px 18px}}
+@media(orientation:landscape) and (max-height:520px) and (min-width:560px) and (max-width:1099px){header{padding:6px 12px 2px}.lgo{font-size:18px;padding:5px 12px 5px 34px;border-radius:10px}.lgo .zsun{left:9px;width:15px;height:15px;margin-top:-7px}.lgo small{font-size:6px;letter-spacing:4px;margin-top:2px}.sub{font-size:10px}.ib{width:36px;height:36px}.stage{flex-direction:row;gap:12px;padding:4px 12px 8px}.pl{flex:1.35;min-width:0;padding:0;align-self:flex-start;max-height:100%;overflow-y:auto;scrollbar-width:none}.vb{max-height:calc(100dvh - 150px)}.nr{margin:6px 2px}.ch{flex:1;min-width:0;padding-top:8px;border-radius:20px;background:var(--surf);overflow:hidden;--nb:var(--surf)}#grid{padding:4px 10px 14px;gap:8px}:root{--cw:72px}}
+@media(min-width:900px) and (orientation:portrait){.stage{flex-direction:column;gap:0;padding:8px 0 0}.pl{flex:none;width:100%;padding:0 32px;align-self:stretch}.vb{max-height:44dvh}.ch{flex:1;min-width:0;margin-top:14px;padding-top:18px;border-radius:32px 32px 0 0}#grid{padding:8px 28px 28px}:root{--cw:96px}}
+@media(min-width:900px) and (orientation:landscape){:root{--cw:72px}.stage{padding-bottom:max(32px,env(safe-area-inset-bottom,0px))}}
+@media(min-width:900px) and (max-height:620px) and (orientation:landscape){.vb{max-height:calc(100dvh - 190px)}.stage{padding-top:6px;padding-bottom:16px}}
+@media(min-width:1100px){.ch{min-width:420px}}
+@media(min-width:1400px){#app{max-width:1560px}:root{--cw:82px}.ini{font-size:30px}}
+@media(min-width:1800px){#app{max-width:1840px}.stage{gap:44px}:root{--cw:88px}}
+.card{contain:layout paint style}.vb{transform:translateZ(0)}
+@media(forced-colors:active){.chip.on,.srv.on{outline:2px solid Highlight}}</style>
+</head>
+<body>
+<div id="app">
+<header><div class="brand"><div class="lgo" role="button" aria-label="ZAR TV"><i class="zsun"></i><span class="zn"><i>Z</i><i>A</i><i>R</i></span><small>TV</small></div><div class="sub">লাইভ টিভি</div></div><button class="ib" id="bI">অ্যাপ ইনস্টল</button><button class="ib" id="bR" aria-label="রিফ্রেশ"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></button><button class="ib" id="bT" aria-label="থিম বদলান">☾</button></header>
+<main class="stage">
+<section class="pl">
+<div class="vb"><video id="video" controls playsinline autoplay></video></div>
+<div class="nr"><div id="now">কোনো চ্যানেল চলছে না</div><button class="ib" id="bF" aria-label="স্ক্রিন অ্যাডজাস্ট"></button><div class="row" id="servers"></div></div>
+</section>
+<section class="ch">
+<div class="sr"><div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="search" type="search" placeholder="চ্যানেল খুঁজুন..."></div><button class="ib" id="cgo" title="সচল চ্যানেল চেক">✔</button><button class="ib" id="crs" title="রিসেট">↺</button></div>
+<div id="cst"></div>
+<div class="row" id="cats"></div>
+<div id="grid"></div>
+</section>
+</main>
+</div>
+<div id="ab"><div class="abc"><img src="za-about.jpg" width="616" height="780" decoding="async" fetchpriority="low" alt="মোঃ জিহাদ আহম্মেদ রমজান"><small>ওয়েবসাইট নির্মাতা</small><b>মোঃ জিহাদ আহম্মেদ রমজান</b><br><button class="abx" id="abx">বন্ধ করুন</button></div></div>
+<div id="zm"><div class="abc"><h3 id="zt">ZAR</h3>
+<div id="zp"><input class="zi" id="zpw" type="password" placeholder="পাসওয়ার্ড দিন" autocomplete="off"><div class="zr"><button class="abx" id="zok">প্রবেশ</button><button class="abx mu" id="zcx">বাতিল</button></div></div>
+<div id="zq" style="display:none"><div class="zl">M3U ফাইল বেছে নিন (একাধিক হতে পারে)</div><input class="zi" id="zf" type="file" accept=".m3u,.m3u8,.txt,audio/x-mpegurl,application/vnd.apple.mpegurl,*/*" multiple>
+<div class="zl">অথবা M3U লিংক</div><input class="zi" id="zu" type="url" placeholder="https://.../playlist.m3u"><div class="zr"><button class="abx" id="zad">লিংক থেকে যোগ</button></div>
+<div class="zl" style="margin-top:10px">যোগ করা M3U তালিকা</div><div id="zl2"></div><div id="zst"></div><div class="zr"><button class="abx mu" id="zcl">সব তালিকা মুছুন</button><button class="abx" id="zdn">বন্ধ করুন</button></div></div></div></div>
+<div id="lm"><div class="abc"><h3 id="lt">ZA LIVE</h3>
+<div id="lp"><input class="zi" id="lpw" type="password" placeholder="পাসওয়ার্ড দিন" autocomplete="off"><div class="zr"><button class="abx" id="lok">প্রবেশ</button><button class="abx mu" id="lcx">বাতিল</button></div></div>
+<div id="lq" style="display:none"><div id="lvb"><video id="lvv" playsinline muted autoplay></video><span id="lvg">অফলাইন</span></div><div id="lst"></div>
+<div class="lvr"><button class="abx" id="lcam">ক্যামেরা চালু</button><button class="abx" id="lfl" disabled>ক্যামেরা ঘোরান</button></div>
+<div class="lvr"><button class="abx" id="lmc" disabled>মাইক: চালু</button><button class="abx" id="lgo" disabled>লাইভ করুন</button></div>
+<div style="margin:10px 0 4px;font-size:13px">দর্শক: <b id="lvc">0</b></div><div class="zr"><button class="abx mu" id="ldn">বন্ধ করুন</button></div></div></div></div>
+<div id="dm"><div class="abc"><h3 id="dt">DVD</h3>
+<div id="dp"><input class="zi" id="dpw" type="password" placeholder="পাসওয়ার্ড দিন" autocomplete="off"><div class="zr"><button class="abx" id="dok">প্রবেশ</button><button class="abx mu" id="dcx">বাতিল</button></div></div>
+<div id="dq" style="display:none"><div class="zl">ভিডিও বেছে নিন (একাধিক হতে পারে)</div><input class="zi" id="df" type="file" accept="video/*" multiple><div id="dl"></div><div id="dst" style="font-size:12px;color:var(--mute);margin:6px 0;min-height:16px;word-break:break-word"></div><div class="zr"><button class="abx" id="ddn">বন্ধ করুন</button></div></div></div></div>
+<script>
+(function(){
+
+var CATS=["Bangla","Sports","News","Movie","Kids","Music","Islamic","Documentary","Other"],pal=["#ff2d95","#7a5cff","#ff7a1a","#00a8cc","#e0245e","#2a9d5c","#f5a300","#3b82f6","#d946ef","#14b8a6","#ef4444","#6366f1"],k=0,SEC=location.protocol==="https:",CH=[],BY={};
+function add(n,c,u){var o={n:n,l:n.toLowerCase(),c:c,col:pal[k%pal.length],col2:pal[(k++*5+4)%pal.length],u:u,i:c+"|"+n};CH.push(o);BY[o.i]=o}
+add("ZA লাইভ","Bangla",["zalive:"]);CH.unshift(CH.pop());CH[0].logo="za-live.jpg";CH[0].xl=1;add("ZA DVD","Bangla",["zadvd:"]);CH.splice(1,0,CH.pop());CH[1].logo="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTQ4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyNTYzZWIiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM2ZDI4ZDkiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2ZmZiIvPjxzdG9wIG9mZnNldD0iLjUiIHN0b3AtY29sb3I9IiNkNmRkZWMiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM5OGE0YmQiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iciIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzIyZDNlZSIvPjxzdG9wIG9mZnNldD0iLjUiIHN0b3AtY29sb3I9IiNlODc5ZjkiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmYmJmMjQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE0OCIgZmlsbD0idXJsKCNiKSIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjU0IiByPSI0MCIgZmlsbD0iIzAwMCIgb3BhY2l0eT0iLjIiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9InVybCgjZCkiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI1MCIgcj0iMzEiIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNyKSIgc3Ryb2tlLXdpZHRoPSI5IiBvcGFjaXR5PSIuNTUiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI1MCIgcj0iNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii43IiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI1MCIgcj0iMTciIGZpbGw9IiNlOWVlZjgiIHN0cm9rZT0iIzk4YTRiZCIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI1MCIgcj0iOCIgZmlsbD0iIzRjMWQ5NSIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjUwIiByPSIzLjIiIGZpbGw9IiNlOWVlZjgiLz48cGF0aCBkPSJNNzAgMjhBMzQgMzQgMCAwIDEgMTAwIDE2IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNC41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIG9wYWNpdHk9Ii44Ii8+PHRleHQgeD0iMTAwIiB5PSIxMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjayxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjMyIiBsZXR0ZXItc3BhY2luZz0iMSIgZmlsbD0iIzAwMCIgb3BhY2l0eT0iLjI1Ij5aQSBEVkQ8L3RleHQ+PHRleHQgeD0iMTAwIiB5PSIxMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjayxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjMyIiBsZXR0ZXItc3BhY2luZz0iMSIgZmlsbD0iI2ZmZiI+WkEgRFZEPC90ZXh0PjxyZWN0IHg9IjY0IiB5PSIxMjYiIHdpZHRoPSI3MiIgaGVpZ2h0PSI0IiByeD0iMiIgZmlsbD0iI2ZiYmYyNCIvPjwvc3ZnPg==";CH[1].xl=1;
+var $=function(i){return document.getElementById(i)};
+var video=$("video"),grid=$("grid"),catsEl=$("cats"),srvEl=$("servers"),now=$("now");
+function ld(k,f){try{var v=JSON.parse(localStorage.getItem(k));return v==null?f:v}catch(e){return f}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+var favs=ld("p2_fav",[]),theme=ld("p2_theme","dark"),cur=null,curS=0,hls=null,cat="all",q="",tok=0,base="";
+var SV='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">',SUN=SV+'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/></svg>',MOON=SV+'<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg>',HS='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 5 6.4 5c2 0 3.7 1.1 4.6 2.7h2C13.9 6.1 15.6 5 17.6 5 21 5 23.1 8.4 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>';function ap(){document.body.classList.toggle("light",theme==="light");$("bT").innerHTML=theme==="light"?SUN:MOON}
+$("bT").onclick=function(){theme=theme==="light"?"dark":"light";sv("p2_theme",theme);ap()};
+var CPAL=[["#ff4fa3","#e11d74","#ff7a1a"],["#35d986","#0a9d5c","#14b8a6"],["#ffb020","#ea580c","#f59e0b"],["#5b9bff","#2563eb","#06b6d4"],["#c084fc","#7c3aed","#d946ef"],["#ffd23f","#f59e0b","#ef6c00"],["#f06bff","#c026d3","#ec4899"],["#1de9b6","#047857","#10b981"],["#9aa7ff","#4f46e5","#0ea5e9"],["#ff6b6b","#dc2626","#f97316"],["#2fd0f0","#0284c7","#6366f1"],["#ff4d6d","#e11d48","#be123c"]];
+function catList(){var n={},o=[];CH.forEach(function(c){if(DEAD[c.i]===1)return;n[c.c]=(n[c.c]||0)+1});CATS.forEach(function(x){if(n[x]&&x!=="Other")o.push(x)});Object.keys(n).filter(function(x){return CATS.indexOf(x)<0&&x!=="Other"}).sort(function(a,b){return n[b]-n[a]||(a<b?-1:1)}).forEach(function(x){o.push(x)});if(n.Other)o.push("Other");return{o:o,n:n}}
+var addB=null;
+function updAdd(){if(!addB)return;var f=!!cur&&favs.indexOf(cur.i)>=0;addB.classList.toggle("on",f);addB.lastChild.textContent=f?"Added":"Add";addB.style.opacity=cur?"":".55";addB.setAttribute("aria-pressed",f?"true":"false")}
+function mkAdd(){var b=document.createElement("button");b.className="chip";b.id="fadd";b.innerHTML=HS.replace("<svg ",'<svg width="14" height="14" style="vertical-align:-2px;margin-right:5px" ')+"<span>Add</span>";b.style.setProperty("--cc","#ff4d6d");b.style.setProperty("--a","#e11d48");b.style.setProperty("--b","#ff7a1a");
+b.onclick=function(){if(!cur)return;var x=favs.indexOf(cur.i);if(x<0)favs.push(cur.i);else favs.splice(x,1);sv("p2_fav",favs);updAdd();if(cat==="fav")rGrid()};addB=b;setTimeout(updAdd,0);return b}
+function rCats(){var cl=catList(),items=[["all","All"],["fav","♥ Favourite"]].concat(cl.o.map(function(n){return[n,n,cl.n[n]]})).concat([["zar","ZAR"],["dvd","DVD"],["lv","ZA LIVE"]]);if(cat!=="all"&&cat!=="fav"&&cl.o.indexOf(cat)<0)cat="all";catsEl.innerHTML="";
+items.forEach(function(it,ix){if(it[0]==="fav")catsEl.appendChild(mkAdd());var b=document.createElement("button");b.className="chip"+(it[0]===cat?" on":"");b.textContent=it[1];if(it[2]){var m=document.createElement("small");m.className="cn";m.textContent=it[2];b.appendChild(m)}var p=CPAL[ix%CPAL.length];if(ix>=CPAL.length){var h=(ix*47)%360;p=["hsl("+h+" 90% 65%)","hsl("+h+" 80% 42%)","hsl("+((h+40)%360)+" 85% 50%)"]}b.style.setProperty("--cc",p[0]);b.style.setProperty("--a",p[1]);b.style.setProperty("--b",p[2]);b.onclick=function(){if(it[0]==="zar"){openZ();return}if(it[0]==="dvd"){dvOpen();return}if(it[0]==="lv"){lvOpen();return}cat=it[0];rCats();rGrid()};catsEl.appendChild(b)})}
+function zs(t){$("zst").textContent=t}
+function openZ(){$("zm").classList.add("on");$("zp").style.display="";$("zq").style.display="none";$("zt").textContent="ZAR";$("zpw").value="";zs("");setTimeout(function(){$("zpw").focus()},50)}
+function lsPut(key,name,items){var seen={},it=items.filter(function(e){var s=e[0]+"|"+e[2];if(seen[s])return false;seen[s]=1;return true});if(!it.length)return 0;LS=LS.filter(function(l){return l.k!==key});LS.push({k:key,n:name,it:it});return it.length}
+var GAS="https://script.google.com/macros/s/AKfycbwbC0A0OxDEOONsL4vK2pH83lLTewHUBgeWtSzZCXv-e_e-JNeX6sXoPhQSzlC9i5vl/exec",ZPW="",SRVN=0;
+function gasOn(){return /^https:\/\//.test(GAS)}
+function gasPost(o){if(!gasOn())return Promise.reject("nourl");o.pass=ZPW;return fetch(GAS,{method:"POST",headers:{"content-type":"text/plain;charset=utf-8"},body:JSON.stringify(o)}).then(function(r){return r.json()}).then(function(j){if(j.error==="auth"){var p=prompt("Apps Script-এর পাসওয়ার্ড দিন");if(!p)throw"auth";ZPW=p.trim();return gasPost(o)}if(j.error)throw j.error;return j})}
+function lsPush(){return gasPost({act:"lists",lists:LS}).then(function(j){if(!j.ok)throw"err";SRVN=0;return 1})}
+function lsDone(msg){sv("p2_lists",LS);rebuild();lsRender();loadLogos();zs("Google Drive-এ সেভ হচ্ছে...");lsPush().then(function(){zs(msg+" (সবাই দেখতে পাবে)")}).catch(function(e){zs(e==="nourl"?"সতর্কতা: index.html-এ Apps Script লিংক বসানো হয়নি, তাই শুধু আপনার ফোনে আছে।":"সতর্কতা: Drive-এ সেভ হয়নি, শুধু আপনার ফোনে আছে। পাসওয়ার্ড ও Apps Script ডিপ্লয় ঠিক আছে কিনা দেখুন।")})}
+function lsRender(){var b=$("zl2");b.innerHTML="";LS.forEach(function(l,i){var d=document.createElement("div");d.className="di";var s=document.createElement("span");s.textContent=l.n;var m=document.createElement("i");m.textContent=l.it.length+" চ্যানেল";var x=document.createElement("button");x.textContent="✕";x.setAttribute("aria-label","মুছুন");x.onclick=function(){lsDel(i)};d.appendChild(s);d.appendChild(m);d.appendChild(x);b.appendChild(d)})}
+function lsDel(i){var l=LS[i];if(!confirm("\""+l.n+"\" তালিকা ও এর "+l.it.length+" টি চ্যানেল মুছবেন?"))return;LS.splice(i,1);lsDone("\""+l.n+"\" মোছা হয়েছে")}
+function stop(){tok++;cur=null;HC=null;if(zp){try{zp.destroy()}catch(e){}zp=null}try{video.pause()}catch(e){}if(hls){hls.destroy();hls=null}video.onended=video.onerror=video.onloadedmetadata=null;video.srcObject=null;try{video.removeAttribute("src");video.load()}catch(e){}base="";now.textContent="";rSrv();updAdd()}
+function rebuild(){CH.length=2;BY={};BY[CH[0].i]=CH[0];BY[CH[1].i]=CH[1];k=2;LS.forEach(function(l){mergeEx(l.it)});CH.forEach(function(c){if(BS[c.i]!=null)c.bs=BS[c.i]});
+if(cur){if(BY[cur.i])cur=BY[cur.i];else stop()}rCats();preLogos();rGrid();if(LGC&&LGC.m)useLogos(LGC.m)}
+$("zok").onclick=function(){if(H($("zpw").value.trim())===PH){ZPW=$("zpw").value.trim();if(SRVN&&LS.length)lsPush().then(function(){zs("আগের তালিকা সার্ভারে সেভ হয়েছে, এখন সবাই দেখতে পাবে")}).catch(function(){});$("zp").style.display="none";$("zq").style.display="";$("zt").textContent="ZAR • M3U যোগ ও মোছা";lsRender();zs(LS.length?"":"এখনো কোনো M3U যোগ করা হয়নি")}else{$("zpw").value="";$("zpw").placeholder="ভুল পাসওয়ার্ড, আবার দিন"}};
+$("zpw").onkeydown=function(e){if(e.key==="Enter")$("zok").onclick()};
+$("zcx").onclick=$("zdn").onclick=function(){$("zm").classList.remove("on")};
+$("zm").onclick=function(e){if(e.target.id==="zm")$("zm").classList.remove("on")};
+$("zf").onchange=function(){var fs=[].slice.call(this.files),inp=this,n=0,ad=0;if(!fs.length)return;zs("পড়া হচ্ছে...");function fin(){if(++n<fs.length)return;inp.value="";if(ad)lsDone(ad+" টি তালিকা যোগ হয়েছে");else zs("কোনো চ্যানেল পাওয়া যায়নি")}
+fs.forEach(function(f){var r=new FileReader();r.onload=function(){if(lsPut("f:"+f.name,f.name,parseM3(String(r.result))))ad++;fin()};r.onerror=fin;r.readAsText(f)})};
+$("zad").onclick=function(){var u=$("zu").value.trim();if(!/^https?:/i.test(u)){zs("সঠিক লিংক দিন");return}zs("নামানো হচ্ছে...");fetch(u).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){var nm=u;try{var p=new URL(u),f=p.pathname.split("/").pop();nm=p.hostname+(f?"/"+f:"")}catch(e){}
+if(lsPut("u:"+u,nm,parseM3(t))){$("zu").value="";lsDone("লিংক থেকে তালিকা যোগ হয়েছে")}else zs("লিংকে কোনো চ্যানেল পাওয়া যায়নি")}).catch(function(){zs("লিংক খোলা যায়নি (সাইট অনুমতি দেয়নি হতে পারে)। ফাইল ডাউনলোড করে ফাইল বাটন দিয়ে দিন।")})};
+$("zcl").onclick=function(){if(!LS.length){zs("মোছার মতো কিছু নেই");return}if(!confirm("যোগ করা সব "+LS.length+" টি M3U তালিকা মুছবেন?"))return;LS=[];lsDone("সব মুছে ফেলা হয়েছে")};
+var LIO=window.IntersectionObserver?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){LIO.unobserve(e.target);var f=e.target._lg;e.target._lg=null;if(f)f()}})},{rootMargin:"300px"}):null;
+var lfT=0,LGX=ld("p2_lgx",{}),lxT=0,LGC=ld("p2_logos4",null),LGA="https://iptv-org.github.io/api/",lgBusy=0;
+function lgSlug(n){return cl(n).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")}
+function lgGuess(c){var sg=lgSlug(c.n);if(sg.length<2)return[];var b="https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/";return[b+"bangladesh/"+sg+"-bd.png",b+"india/"+sg+"-in.png",b+"international/"+sg+"-int.png"]}
+function lgLoad(box,urls,i,c){if(i>=urls.length){lgFail(box);return}var im=new Image();im.referrerPolicy="no-referrer";im.decoding="async";try{im.fetchPriority="low"}catch(e){}im.alt="";
+im.onload=function(){if(box.querySelector("img"))return;box.classList.add("lg");box.appendChild(im);if(c&&urls[i].indexOf("tv-logos")>0){LGX[c.i]=urls[i];clearTimeout(lxT);lxT=setTimeout(function(){sv("p2_lgx",LGX)},1000)}};
+im.onerror=function(){lgLoad(box,urls,i+1,c)};im.src=urls[i]}
+function lgFail(box){var d=box.parentNode&&box.parentNode.dataset&&box.parentNode.dataset.id,c=d&&BY[d];if(!c)return;
+if(!c.gx){c.gx=1;if(LGX[c.i]===0){}else if(LGX[c.i]){lgLoad(box,[LGX[c.i]],0,null);return}else{var g=lgGuess(c);if(g.length){lgLoad(box,g,0,c);setTimeout(function(){if(!box.querySelector("img")&&LGX[c.i]==null){LGX[c.i]=0;sv("p2_lgx",LGX)}},9000);return}}}
+if(c.xl&&!c.nf){c.nf=1;c.xl=0;c.logo=null;clearTimeout(lfT);lfT=setTimeout(loadLogos,600)}}
+function lgNone(box,c){if(c.gx||LGX[c.i]===0)return;if(LGX[c.i]){c.gx=1;lgLoad(box,[LGX[c.i]],0,null);return}lgFail(box)}
+function lg(box,u){var raw=u;if(SEC&&u.indexOf("http:")===0)u="https:"+u.slice(5);var d=box.parentNode&&box.parentNode.dataset&&box.parentNode.dataset.id,c=d&&BY[d];var go=function(){var urls=[u];if(raw.indexOf("http")===0)urls.push("https://wsrv.nl/?url="+encodeURIComponent(raw)+"&w=160&h=160&fit=contain&output=png");lgLoad(box,urls,0,c)};if(LIO){box._lg=go;LIO.observe(box)}else go()}
+function cl(s){return s.replace(/[\(\[\{][^\)\]\}]*[\)\]\}]/g," ").replace(/\b(hd|sd|fhd|uhd|4k|hevc|plus|premium|live|bd|india|bangla|bengali)\b/ig," ")}
+function nk(s){return s.toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]/g,"")}
+function nk2(s){var r=nk(cl(s)).replace(/(hd|tv|channel|live)+$/,"").replace(/^tv/,"");return r.length>2?r:""}
+function useLogos(m){CH.forEach(function(c){if(m[c.i]&&!c.xl)c.logo=m[c.i]});var cs=grid.querySelectorAll(".card");for(var i=0;i<cs.length;i++){var c=BY[cs[i].dataset.id],b=cs[i].children[0];if(c&&c.logo&&!b.querySelector("img"))lg(b,c.logo)}}
+function lgMatch(z){var A=z.A,M=z.M,Q=z.Q;return Promise.all([fetch(A+"channels.json").then(function(r){return r.json()}),fetch(A+"logos.json").then(function(r){return r.json()})]).then(function(r){
+var lm={};r[1].forEach(function(l){if(!l.url)return;var o=lm[l.channel];if(!o||(o.feed&&!l.feed))lm[l.channel]=l});
+var idx={};r[0].forEach(function(h){var l=lm[h.id];if(!l||h.closed)return;var sc=h.country==="BD"?2:h.country==="IN"?1:0;[h.name].concat(h.alt_names||[]).forEach(function(n){[nk(n),nk2(n),nk(cl(n))].forEach(function(k){if(k&&(!idx[k]||idx[k].s<sc))idx[k]={s:sc,u:l.url}})})});
+var m={},q={},k0;for(k0 in M)m[k0]=M[k0];for(k0 in Q)q[k0]=1;z.c.forEach(function(c){var n=c[1],a=nk(n),b=nk2(n),d=nk(cl(n)),h=idx[a]||(d&&idx[d])||(b&&idx[b]);if(!h&&d.length>=5){var bs=-1;for(var k in idx){if(k.length>=5&&Math.abs(k.length-d.length)<=3&&(k.indexOf(d)===0||d.indexOf(k)===0)&&idx[k].s>bs){bs=idx[k].s;h=idx[k]}}}q[c[0]]=1;if(h)m[c[0]]=h.u});return{m:m,q:q}})}
+function lgRun(z,cb){if(window.Worker&&window.Blob&&window.URL){try{var u=URL.createObjectURL(new Blob([[cl,nk,nk2,lgMatch].join(";")+";onmessage=function(e){lgMatch(e.data).then(function(r){postMessage(r)},function(){postMessage(null)})}"],{type:"text/javascript"})),w=new Worker(u),fin=function(r){w.terminate();URL.revokeObjectURL(u);cb(r)};w.onmessage=function(e){fin(e.data)};w.onerror=function(){fin(null)};w.postMessage(z);return}catch(e){}}lgMatch(z).then(cb,function(){cb(null)})}
+function loadLogos(){if(!CH.some(function(c){return!c.xl}))return;var C=LGC,now=Date.now(),M=(C&&C.m)||{},Q=(C&&C.q)||{};if(C&&C.m)useLogos(C.m);var miss=CH.some(function(c){return!c.xl&&!M[c.i]&&!Q[c.i]});if(!miss&&C&&now-C.t<6048e5)return;
+var cn=navigator.connection;if(cn&&(cn.saveData||/2g/.test(cn.effectiveType||"")))return;
+if(lgBusy){lgBusy=2;return}lgBusy=1;
+lgRun({A:LGA,M:M,Q:Q,c:CH.filter(function(c){return!c.xl}).map(function(c){return[c.i,c.n]})},function(r){var w=lgBusy;lgBusy=0;if(r){LGC={t:now,m:r.m,q:r.q};sv("p2_logos4",LGC);useLogos(r.m)}if(w===2)loadLogos()})}
+var LS=ld("p2_lists",[]),PH="v2pg5r7zxt";
+(function(){var o=ld("p2_extra",[]);if(o.length){LS.push({k:"old",n:"আগে যোগ করা চ্যানেল",it:o});sv("p2_lists",LS)}try{localStorage.removeItem("p2_extra")}catch(e){}})();
+function H(str){var h1=0xdeadbeef,h2=0x41c6ce57;for(var i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return(4294967296*(2097151&h2)+(h1>>>0)).toString(36)}
+function mcat(g){var r=(g||"").split(/[;|,]/)[0].replace(/\s+/g," ").trim(),x=r.toLowerCase();if(!x||/^(undefined|null|none|uncategori[sz]ed|general|other|others|misc)$/.test(x))return"Other";return /news|খবর/.test(x)?"News":/sport|cricket|football|খেলা/.test(x)?"Sports":/movie|film|cinema|সিনেমা/.test(x)?"Movie":/kid|cartoon|child|anim|শিশু/.test(x)?"Kids":/music|song|গান/.test(x)?"Music":/islam|quran|relig|ইসলাম/.test(x)?"Islamic":/^(bangla|bengali|bangladesh?|bd)$/.test(x)?"Bangla":r.length>22?r.slice(0,22):r}
+function gcat(n,c){if(c!=="Other")return c;n=n.toLowerCase();var R=[["Islamic",/islam|quran|makkah|madina|iqra|hadith|deen|huda|peace tv|ahlebait/],["News",/news|খবর|24 ?ghanta|abp|ananda|tv ?9|cnn|bbc|aljazeera|al jazeera|jamuna|somoy|ekattor|dw |wion|republic|aaj tak|ndtv/],["Sports",/sport|cricket|football|\bt ?sports|ten ?[123]|espn|\bpsl\b|ipl|wwe|dd sports|eurosport/],["Kids",/kids|cartoon|toon|nick|pogo|jungle|zoo ?moo|disney|chutti|baby|hungama|chorki kids|motu|doraemon/],["Music",/music|hits|\bhit\b|mtv|9xm|songs|gaan|b4u|yre|vevo|radio/],["Movie",/movie|cinema|film|hollyw|bolly|action|sheemaroo|hbo|\bmax\b|cine|gold|thriller/],["Documentary",/document|discover|wild|nat ?geo|national geographic|history|animal|earth|travel|science|planet|tlc/],["Bangla",/bangla|bengali|kolkata|jalsha|zee bangla|colors bangla|sun bangla|rupasi|aakash|channel ?i|\batn\b|\bntv\b|\brtv\b|gazi|dhaka|deepto|boishakhi|independent|maasranga|btv|amar|rongeen/]];for(var i=0;i<R.length;i++)if(R[i][1].test(n))return R[i][0];return c}
+function mergeEx(list){var lf={};list.forEach(function(e){if(e[3])lf[e[3]]=(lf[e[3]]||0)+1});var by={};CH.forEach(function(c){var k=nk(c.n);if(!by[k])by[k]=c});
+list.forEach(function(e){if(e[3]&&lf[e[3]]>=3)e=[e[0],e[1],e[2],""];var k=nk(e[0]),c=by[k];if(c){if(c.u.indexOf(e[2])>=0)return;var s=c.u.indexOf("");if(s>=0)c.u[s]=e[2];else return;if(e[3]&&!c.xl){c.logo=e[3];c.xl=1}return}
+add(e[0],gcat(e[0],mcat(e[1])),[e[2],"",""]);c=CH[CH.length-1];if(e[3]){c.logo=e[3];c.xl=1}by[k]=c})}
+function parseM3(t){var out=[],inf=null;t.split(/\r?\n/).forEach(function(l){l=l.trim();if(!l)return;if(l.indexOf("#EXTINF")===0){var nm=l.slice(l.lastIndexOf(",")+1).trim(),lg=(l.match(/tvg-logo="([^"]*)"/)||[])[1]||"",g=(l.match(/group-title="([^"]*)"/)||[])[1]||"";if(!nm)nm=(l.match(/tvg-name="([^"]*)"/)||[])[1]||"";inf=[nm,g,lg]}else if(l[0]!=="#"&&/^https?:/i.test(l)){if(inf&&inf[0])out.push([inf[0],inf[1],l,inf[2]]);inf=null}});return out}
+LS.forEach(function(l){mergeEx(l.it)});
+(gasOn()?fetch(GAS,{cache:"no-store"}):Promise.reject()).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){if(j&&Array.isArray(j.lists)){LS=j.lists;sv("p2_lists",LS);rebuild();if($("zm").classList.contains("on"))lsRender()}else SRVN=1}).catch(function(){});
+var DEAD=ld("p2_dead",{}),BS=ld("p2_bs",{});CH.forEach(function(c){if(BS[c.i]!=null)c.bs=BS[c.i]});
+function tst(u){if(u==="zalive:"||u==="zadvd:")return Promise.resolve(true);return new Promise(function(r){var ac=window.AbortController?new AbortController():null,t=setTimeout(function(){if(ac)ac.abort();r(false)},7000);
+fetch(u,{cache:"no-store",signal:ac?ac.signal:undefined}).then(function(x){if(!x.ok)throw 0;return x.text()}).then(function(b){clearTimeout(t);r(b.indexOf("#EXTM3U")>=0||!/\.m3u8?(\?|$)/i.test(u))}).catch(function(){if(!/^https?:/i.test(u)){clearTimeout(t);r(false);return}fetch(u,{mode:"no-cors",cache:"no-store",signal:ac?ac.signal:undefined}).then(function(){clearTimeout(t);r(true)}).catch(function(){clearTimeout(t);r(false)})})})}
+var scan=false,cst=$("cst"),cgo=$("cgo");
+var scG=0;function chkAll(){if(scan){scan=false;cgo.textContent="✔";return}scan=true;var my=++scG;cgo.textContent="■";
+var q=CH.slice(),tot=q.length,done=0,live=0;
+function w(){if(!scan||my!==scG||!q.length)return Promise.resolve();var c=q.shift(),i=0;
+function nx(){if(i>=3)return Promise.resolve(-1);var s=i++;if(!c.u[s]||!ok(c.u[s]))return nx();return tst(c.u[s]).then(function(g){return g?s:nx()})}
+return nx().then(function(s){if(!scan||my!==scG)return;done++;if(s>=0){live++;DEAD[c.i]=0;c.bs=s;BS[c.i]=s}else{DEAD[c.i]=1}
+cst.textContent="চেক "+done+"/"+tot+" • সচল "+live;if(done%15===0){sv("p2_dead",DEAD);sv("p2_bs",BS)}return w()})}
+var ws=[];for(var j=0;j<8;j++)ws.push(w());
+Promise.all(ws).then(function(){sv("p2_dead",DEAD);sv("p2_bs",BS);if(my!==scG)return;scan=false;cgo.textContent="✔";cst.textContent="";rCats();rGrid()})}
+cgo.onclick=chkAll;$("crs").onclick=function(){scan=false;DEAD={};BS={};CH.forEach(function(c){c.bs=null});sv("p2_dead",DEAD);sv("p2_bs",BS);cgo.textContent="✔";cst.textContent="";rCats();rGrid()};
+var L=[],shown=0,CHUNK=30;
+function more(){var f=document.createDocumentFragment(),e=Math.min(shown+CHUNK,L.length);
+for(;shown<e;shown++){var c=L[shown],d=document.createElement("div");d.className="card"+(cur===c?" on":"");d.dataset.id=c.i;d.tabIndex=0;d.setAttribute("role","button");d.style.cssText="--cc:"+c.col+";--c2:"+c.col2;
+d.innerHTML='<div class="ini"><span></span></div><div class="lbl"></div>';d.firstChild.firstChild.textContent=c.n.charAt(0);d.lastChild.textContent=c.n;c.el=d;
+if(c.logo)lg(d.firstChild,c.logo);else if(LIO){(function(b,cc){b._lg=function(){lgNone(b,cc)};LIO.observe(b)})(d.firstChild,c)}f.appendChild(d)}
+grid.appendChild(f)}
+function preLogos(){if(LGC&&LGC.m)CH.forEach(function(c){if(!c.xl&&!c.logo&&LGC.m[c.i])c.logo=LGC.m[c.i]})}
+function rGrid(){if(LIO)LIO.disconnect();grid.innerHTML="";grid.scrollTop=0;var ql=q.trim().toLowerCase();
+L=CH.filter(function(c){if(DEAD[c.i]===1)return false;if(cat==="fav"){if(favs.indexOf(c.i)<0)return false}else if(cat!=="all"&&c.c!==cat)return false;return !ql||c.l.indexOf(ql)>=0});shown=0;
+if(!L.length){grid.innerHTML='<div class="empty">কোনো চ্যানেল পাওয়া যায়নি</div>';return}
+more();if(!LS.length&&cat==="all"&&!ql){var h=document.createElement("div");h.className="empty";h.textContent="নিজের চ্যানেল যোগ করতে ওপরের ZAR বাটনে চাপুন";grid.appendChild(h)}}
+var sT=0;grid.addEventListener("scroll",function(){if(sT)return;sT=requestAnimationFrame(function(){sT=0;if(shown<L.length&&grid.scrollTop+grid.clientHeight>grid.scrollHeight-700)more()})},{passive:true});
+grid.addEventListener("keydown",function(e){if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("card")){e.preventDefault();e.target.click()}});
+grid.onclick=function(e){var d=e.target.closest(".card");if(!d)return;var c=BY[d.dataset.id];if(!c)return;
+play(c,best(c))};
+function rSrv(){srvEl.innerHTML="";for(var i=0;i<3;i++)(function(i){var b=document.createElement("button");b.className="srv"+(i===curS?" on":"")+(cur&&!cur.u[i]?" na":"");b.textContent=i+1;b.title="Server "+(i+1);
+b.onclick=function(){if(cur&&cur.u[i])play(cur,i);else{curS=i;rSrv()}};srvEl.appendChild(b)})(i)}
+function show(t){now.textContent=base+"  •  "+t}
+function ok(u){return u&&(!SEC||u.indexOf("http:")!==0)}
+function best(c){var i;if(c.bs!=null&&c.u[c.bs])return c.bs;for(i=0;i<3;i++)if(ok(c.u[i])&&!/\.ts(\?|$)/.test(c.u[i]))return i;for(i=0;i<3;i++)if(ok(c.u[i]))return i;for(i=0;i<3;i++)if(c.u[i])return i;return 0}
+function nxt(c,s){for(var i=s+1;i<3;i++)if(ok(c.u[i]))return i;return -1}
+function fail(c,s,m){var n=nxt(c,s);if(n>=0)play(c,n);else show(m)}
+var ZL_ID="zatv-live-a683139ff257",zp=null;
+var peerP=null;function loadPeer(){if(window.Peer)return Promise.resolve();if(peerP)return peerP;peerP=new Promise(function(r){var u=["https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js","https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"],i=0;(function nx(){if(window.Peer||i>=u.length){r();return}var e=document.createElement("script");e.src=u[i++];e.onload=nx;e.onerror=nx;document.head.appendChild(e)})()});peerP.then(function(){if(!window.Peer)peerP=null});return peerP}
+function zlive(my){var wt=4000;(function go(){if(my!==tok)return;if(!window.Peer){loadPeer().then(function(){if(my!==tok)return;if(window.Peer)go();else show("লাইভ লাইব্রেরি লোড হয়নি, রিফ্রেশ দিন")});return}
+show("লাইভ সংযোগ হচ্ছে...");var p=new Peer(),got=0,done=0;if(zp){try{zp.destroy()}catch(e){}}zp=p;
+function retry(m){if(done)return;done=1;try{p.destroy()}catch(e){}if(my!==tok)return;show(m);var w0=wt;wt=Math.min(Math.round(wt*1.5),30000);setTimeout(function(){if(my===tok&&!got)go()},w0)}
+var tm=setTimeout(function(){if(my===tok&&!got)retry("লাইভ এখন বন্ধ আছে, অপেক্ষা করা হচ্ছে...")},12000);
+p.on("call",function(call){call.answer();call.on("stream",function(st){if(my!==tok||got)return;got=1;wt=4000;clearTimeout(tm);video.srcObject=st;video.play().catch(function(){video.muted=true;video.play().catch(function(){})});now.textContent=base+"  •  LIVE"});call.on("close",function(){if(my===tok&&got){got=0;done=0;retry("লাইভ শেষ হয়েছে, আবার শুরু হলে চালু হবে...")}})});
+p.on("open",function(){var d=p.connect(ZL_ID);d.on("close",function(){if(my===tok&&got){got=0;done=0;clearTimeout(tm);retry("লাইভ শেষ হয়েছে, আবার শুরু হলে চালু হবে...")}})});
+p.on("error",function(e){if(got)return;clearTimeout(tm);retry(e.type==="peer-unavailable"?"লাইভ এখন বন্ধ আছে, অপেক্ষা করা হচ্ছে...":"লাইভ সংযোগ হয়নি, আবার চেষ্টা হচ্ছে...")})})()}
+function zdvd(my){var b0=base;
+var DVU=function(id){return"https://drive.usercontent.google.com/download?id="+encodeURIComponent(id)+"&export=download&confirm=t"};
+var gj=gasOn()?fetch(GAS,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){if(j&&Array.isArray(j.videos))sv("p2_dvd",j.videos);return j}).catch(function(){return{videos:ld("p2_dvd",[])}}):Promise.reject(0);gj.then(function(j){
+var v=(j.videos||[]).filter(function(x){return x&&x.id}).map(function(x){return{id:x.id,title:x.title,d:x.d,url:"/api/dvd/v/"+encodeURIComponent(x.id),u2:DVU(x.id)}});if(!v.length)throw 0;if(my!==tok)return;
+var tot=0,sy=1,i=0,off=0,bad=0;v.forEach(function(x){x.d=+x.d||0;if(x.d<=0)sy=0;tot+=x.d});
+if(sy&&tot>0){var t=(Date.now()/1000)%tot;for(i=0;i<v.length;i++){if(t<v[i].d){off=t;break}t-=v[i].d}if(i>=v.length){i=0;off=0}}
+function go(k,o){if(my!==tok)return;var alt=0,x=v[k%v.length];base=b0+"  •  "+(x.title||"ভিডিও");now.textContent=base;
+video.srcObject=null;video.src=x.url;
+video.onloadedmetadata=function(){if(o>0&&my===tok)try{video.currentTime=o}catch(e){}};
+video.onended=function(){if(my===tok){bad=0;go(k+1,0)}};
+video.onerror=function(){if(my!==tok)return;if(!alt){alt=1;video.src=x.u2;video.play().catch(function(){});return}if(++bad>=v.length){show("ZA DVD-র ভিডিও চালু হয়নি");return}setTimeout(function(){go(k+1,0)},500)};
+video.play().catch(function(){})}
+go(i,off)}).catch(function(){if(my===tok)show("ZA DVD-তে এখনো ভিডিও যোগ হয়নি")})}
+var HC=null;
+function mkHls(){var h=new Hls({lowLatencyMode:false,startLevel:0,testBandwidth:false,maxBufferLength:8,maxMaxBufferLength:20,backBufferLength:8,capLevelToPlayerSize:true,startFragPrefetch:true,manifestLoadingTimeOut:4000,manifestLoadingMaxRetry:0,levelLoadingTimeOut:5000,levelLoadingMaxRetry:1,levelLoadingRetryDelay:500,fragLoadingTimeOut:8000,fragLoadingMaxRetry:2,fragLoadingRetryDelay:500});
+h.on(Hls.Events.MANIFEST_PARSED,function(){video.play().catch(function(){})});
+h.on(Hls.Events.ERROR,function(e,d){if(!d.fatal||!HC||HC.my!==tok)return;if(d.type===Hls.ErrorTypes.NETWORK_ERROR&&h._pl&&(h._nr=(h._nr||0)+1)<=4){setTimeout(function(){if(HC&&HC.my===tok&&hls===h)try{h.startLoad()}catch(x){}},1500*h._nr);return}if(d.type===Hls.ErrorTypes.MEDIA_ERROR&&!h._rm){h._rm=1;try{h.recoverMediaError();return}catch(x){}}h.destroy();if(hls===h)hls=null;fail(HC.c,HC.s,"চালু হয়নি। অন্য সার্ভার বা চ্যানেল চেষ্টা করুন।")});return h}
+function play(c,s,r){tok++;var my=tok;cur=c;curS=s;updAdd();base=c.n+"  •  Server "+(s+1);now.textContent=base;var o=grid.querySelector(".card.on");if(o)o.classList.remove("on");o=c.el;if(o&&o.parentNode===grid)o.classList.add("on");rSrv();
+if(!sm){um=video.muted;sm=true}video.muted=true;
+var url=c.u[s],hl=url&&window.Hls&&Hls.isSupported()&&ok(url)&&url!=="zalive:"&&url!=="zadvd:"&&!/\.(mp4|webm|m4v|mov|mkv|ts)(\?|#|$)/i.test(url);
+if(zp){try{zp.destroy()}catch(e){}zp=null}
+if(hl){if(video.srcObject)video.srcObject=null;var nw=!hls;if(nw)hls=mkHls();HC={my:my,c:c,s:s};hls._rm=0;hls._pl=0;hls._nr=0;hls.loadSource(url);if(nw||!hls.media)hls.attachMedia(video);return}
+try{video.pause()}catch(e){}
+if(hls){hls.destroy();hls=null}if(video.srcObject)video.srcObject=null;try{video.removeAttribute("src");video.load()}catch(e){}
+if(!url){show("এই সার্ভারে লিংক নেই");return}if(url==="zalive:"){zlive(my);return}if(url==="zadvd:"){zdvd(my);return}
+if(!ok(url)){fail(c,s,"এই লিংক http, https সাইটে চলে না");return}
+if(!window.Hls&&!video.canPlayType("application/vnd.apple.mpegurl")&&(r||0)<200){setTimeout(function(){if(my===tok)play(c,s,(r||0)+1)},50);return}
+video.onerror=function(){if(my===tok&&cur===c)fail(c,s,"চালু হয়নি। অন্য সার্ভার বা চ্যানেল চেষ্টা করুন।")};video.src=url}
+var sm=false,um=false;var bst=0;video.addEventListener("playing",function(){now.textContent=base;if(hls){hls._pl=1;hls._nr=0}if(cur&&cur.bs!==curS){cur.bs=curS;BS[cur.i]=curS;clearTimeout(bst);bst=setTimeout(function(){sv("p2_bs",BS)},1500)}if(sm){sm=false;setTimeout(function(){if(!sm)video.muted=um},300)}});
+$("bR").onclick=function(){if(cur)play(cur,curS)};
+var wo={};grid.addEventListener("pointerdown",function(e){var d=e.target.closest(".card");if(!d)return;var c=BY[d.dataset.id];if(!c)return;var u=c.u[best(c)];if(!u||u.indexOf("http")!==0)return;try{var o=new URL(u).origin;if(wo[o])return;wo[o]=1;var l=document.createElement("link");l.rel="preconnect";l.href=o;document.head.appendChild(l)}catch(x){}},{passive:true});
+var st=0;$("search").oninput=function(e){q=e.target.value;clearTimeout(st);st=setTimeout(rGrid,120)};
+var dp=null,bI=$("bI"),IK="zatvInstalled";
+function iH(){bI.style.display="none"}
+function iS(){try{localStorage.setItem(IK,"1")}catch(x){}}
+var sa=(window.matchMedia&&["standalone","fullscreen","minimal-ui","window-controls-overlay"].some(function(m){return matchMedia("(display-mode: "+m+")").matches}))||navigator.standalone;
+if(sa){iS();iH()}else{try{if(localStorage.getItem(IK))iH()}catch(x){}}
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;try{localStorage.removeItem(IK)}catch(x){}bI.style.display=""});
+window.addEventListener("appinstalled",function(){iS();iH();dp=null});
+bI.onclick=function(){if(dp){dp.prompt();dp.userChoice.then(function(r){if(r&&r.outcome==="accepted"){iS();iH()}dp=null});return}
+var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+alert((ios?"Safari-তে নিচের Share বাটন চেপে 'Add to Home Screen' বেছে নিন।":"ব্রাউজারের ⋮ মেনু খুলে 'Install app' বা 'হোম স্ক্রিনে যোগ করুন' চাপুন।")+(location.protocol==="https:"?"":"\n(ইনস্টলের জন্য সাইটটি https লিংকে খুলতে হবে)"))};
+if("serviceWorker" in navigator&&/^https?:/.test(location.protocol))window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})});
+var ab=$("ab");document.querySelector(".lgo").onclick=function(){ab.classList.add("on")};ab.onclick=function(e){if(e.target===ab||e.target.id==="abx")ab.classList.remove("on")};
+var dvPw="",dvL=[];
+var LV_H="1792cfdcb47bc5e50cd8ebd8cdd5baf5100d4850ee7364d58c9f3b2cf66edca4",lvFace="user",lvMic=true,lvStream=null,lvPeer=null,lvCalls={},lvLive=false,lvWl=null;
+function lvS(t){$("lst").textContent=t}
+function lvCnt(){$("lvc").textContent=Object.keys(lvCalls).length}
+function lvSha(t){if(!(window.crypto&&crypto.subtle))return Promise.resolve(null);return crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return("0"+x.toString(16)).slice(-2)}).join("")})}
+function lvOpen(){$("lm").classList.add("on");$("lp").style.display="";$("lq").style.display="none";$("lt").textContent="ZA LIVE";$("lpw").value="";$("lpw").placeholder="পাসওয়ার্ড দিন";setTimeout(function(){$("lpw").focus()},50)}
+function lvStop(m){lvLive=false;lvRecStop();if(lvPeer){try{lvPeer.destroy()}catch(e){}lvPeer=null}lvCalls={};lvCnt();$("lvg").textContent="অফলাইন";$("lvg").className="";var g=$("lgo");g.textContent="লাইভ করুন";g.style.background="";if(lvWl){try{lvWl.release()}catch(e){}lvWl=null}if(m)lvS(m)}
+function lvClose(){if(lvLive&&!confirm("লাইভ চলছে। বন্ধ করবেন?"))return;lvStop();lvRawStop();if(lvStream){lvStream.getTracks().forEach(function(t){t.stop()});lvStream=null}$("lvv").srcObject=null;$("lgo").disabled=true;$("lfl").disabled=true;$("lmc").disabled=true;$("lm").classList.remove("on")}
+function lvWake(){try{if(navigator.wakeLock&&lvLive)navigator.wakeLock.request("screen").then(function(l){lvWl=l}).catch(function(){})}catch(e){}}
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")lvWake()});
+function lvSwap(s){Object.keys(lvCalls).forEach(function(k){var pc=lvCalls[k].peerConnection;if(!pc)return;pc.getSenders().forEach(function(sn){if(!sn.track)return;var n=s.getTracks().filter(function(t){return t.kind===sn.track.kind})[0];if(n)sn.replaceTrack(n)})})}
+var lvRaw=null,lvCv=null,lvSrc=null,lvTm=0;
+function lvWide(s){clearInterval(lvTm);var v=lvSrc||(lvSrc=document.createElement("video"));v.muted=true;v.playsInline=true;v.srcObject=s;v.play().catch(function(){});var c=lvCv||(lvCv=document.createElement("canvas"));c.width=1280;c.height=720;var x=c.getContext("2d");
+lvTm=setInterval(function(){var w=v.videoWidth,h=v.videoHeight;if(!w||!h)return;var sw=w,sh=h;if(w/h>16/9)sw=Math.round(h*16/9);else sh=Math.round(w*9/16);try{x.drawImage(v,(w-sw)/2,(h-sh)/2,sw,sh,0,0,1280,720)}catch(e){}},42);
+var o=c.captureStream(24);s.getAudioTracks().forEach(function(t){o.addTrack(t)});return o}
+function lvRawStop(){clearInterval(lvTm);if(lvSrc)try{lvSrc.srcObject=null}catch(e){}if(lvRaw){lvRaw.getTracks().forEach(function(t){t.stop()});lvRaw=null}}
+var lvRec=null,lvSegs=[],lvUpBusy=false,lvTry=0;
+function lvRecStop(){if(lvRec){var r=lvRec;lvRec=null;try{if(r.state!=="inactive")r.stop()}catch(e){}}}
+function lvRecStart(){lvRecStop();if(!window.MediaRecorder||!lvStream)return;var mt=["video/webm;codecs=vp8,opus","video/webm","video/mp4"].filter(function(t){return MediaRecorder.isTypeSupported(t)})[0],r;try{r=new MediaRecorder(lvStream,mt?{mimeType:mt,videoBitsPerSecond:1500000}:{videoBitsPerSecond:1500000})}catch(e){return}
+var sg={ch:[],t:Date.now(),mt:r.mimeType||mt||"video/webm"};r.ondataavailable=function(e){if(e.data&&e.data.size)sg.ch.push(e.data)};r.onstop=function(){sg.d=Math.round((Date.now()-sg.t)/100)/10;if(sg.ch.length&&sg.d>=3)lvSegs.push(sg);lvUpAll()};try{r.start(2000);lvRec=r}catch(e){}}
+function lvUpAll(){if(lvLive||lvUpBusy||!lvSegs.length)return;lvUpBusy=true;var dt=new Date(),p2=function(n){return("0"+n).slice(-2)},nm="ZA LIVE "+dt.getFullYear()+"-"+p2(dt.getMonth()+1)+"-"+p2(dt.getDate())+" "+p2(dt.getHours())+":"+p2(dt.getMinutes()),n=0,tot=lvSegs.length;
+(function nx(){var sg=lvSegs[0];if(!sg){lvUpBusy=false;lvTry=0;upS=function(t){dvS(t)};lvS("লাইভ রেকর্ডিং Drive-এ সেভ হয়েছে, ZA DVD-তে যোগ হয়েছে।");return}
+var ty=sg.mt.split(";")[0],f=new File([new Blob(sg.ch,{type:ty})],"live-"+Date.now()+"."+(/mp4/.test(ty)?"mp4":"webm"),{type:ty});n++;upS=function(t){lvS("রেকর্ডিং সেভ: "+t)};
+dvSave(f,nm+(tot>1?" ("+n+")":""),sg.d).then(function(){lvSegs.shift();nx()}).catch(function(e){lvUpBusy=false;upS=function(t){dvS(t)};if(++lvTry<=5){lvS("রেকর্ডিং সেভ হয়নি, আবার চেষ্টা হচ্ছে... পেজ বন্ধ করবেন না");setTimeout(lvUpAll,15000)}else lvS("রেকর্ডিং সেভ হয়নি ("+e+")")})})()}
+window.addEventListener("beforeunload",function(e){if(lvLive||lvUpBusy||lvSegs.length){e.preventDefault();e.returnValue=""}});
+function lvCam(){if(!window.isSecureContext||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){lvS("ফাইল থেকে খুলে ক্যামেরা চলে না। Cloudflare-এ আপলোড করা https:// লিংকে সাইটটি খুলুন।");return}
+(function(){lvRawStop();if(lvStream){lvStream.getTracks().forEach(function(t){t.stop()})}function g(f){return navigator.mediaDevices.getUserMedia({video:{facingMode:f,width:{ideal:1280},height:{ideal:720},frameRate:{ideal:24}},audio:{echoCancellation:true,noiseSuppression:true}})}var nA=function(e){return e&&e.name==="NotAllowedError"};var wt=function(m){return new Promise(function(r){setTimeout(r,m)})};return wt(400).then(function(){return g({exact:lvFace})}).catch(function(e){if(nA(e))throw e;if(e&&e.name==="NotReadableError")return wt(900).then(function(){return g({exact:lvFace})});return g({ideal:lvFace})}).catch(function(e){if(nA(e))throw e;return navigator.mediaDevices.getUserMedia({video:true,audio:true})})})().then(function(raw){var s=lvWide(raw);lvRaw=raw;var o=lvStream;lvStream=s;s.getAudioTracks().forEach(function(t){t.enabled=lvMic});$("lvv").srcObject=s;lvSwap(s);if(lvLive)lvRecStart();if(o)o.getTracks().forEach(function(t){t.stop()});$("lgo").disabled=false;$("lfl").disabled=false;$("lmc").disabled=false;if(!lvLive)lvS("ক্যামেরা তৈরি। \"লাইভ করুন\" চাপুন।")}).catch(function(e){var n=e&&e.name;lvS(n==="NotAllowedError"?"অনুমতি দেওয়া হয়নি। ব্রাউজারের সাইট সেটিংসে ক্যামেরা ও মাইক \"অনুমতি দিন\" করে আবার চেষ্টা করুন।":n==="NotFoundError"?"ক্যামেরা বা মাইক পাওয়া যায়নি।":n==="NotReadableError"?"ক্যামেরা অন্য অ্যাপ ব্যবহার করছে, সেটি বন্ধ করুন।":"ক্যামেরা চালু করা যায়নি ("+(n||"?")+")")})}
+function lvStart(){if(!lvStream)return;if(!window.Peer){lvS("লোড হচ্ছে...");loadPeer().then(function(){if(window.Peer)lvStart();else lvS("লাইভ লাইব্রেরি লোড হয়নি, রিফ্রেশ দিন")});return}lvS("সংযোগ হচ্ছে...");var p=new Peer(ZL_ID);lvPeer=p;
+p.on("open",function(){lvLive=true;lvRecStart();$("lvg").textContent="লাইভ";$("lvg").className="on";var g=$("lgo");g.textContent="লাইভ বন্ধ করুন";g.style.background="#e0245e";lvS("আপনি এখন লাইভ। দর্শকরা ZA লাইভ চ্যানেলে দেখছে।");lvWake()});
+p.on("connection",function(conn){conn.on("open",function(){var c=p.call(conn.peer,lvStream);lvCalls[conn.peer]=c;lvCnt();c.on("close",function(){delete lvCalls[conn.peer];lvCnt()})});conn.on("close",function(){var c=lvCalls[conn.peer];if(c)c.close();delete lvCalls[conn.peer];lvCnt()})});
+p.on("disconnected",function(){if(lvLive&&lvPeer&&!lvPeer.destroyed)lvPeer.reconnect()});
+p.on("error",function(e){if(e.type==="unavailable-id")lvStop("আরেকটি ট্যাব বা ডিভাইসে লাইভ চলছে। সেটি বন্ধ করে আবার চেষ্টা করুন।");else if(e.type!=="peer-unavailable")lvStop("সংযোগ সমস্যা ("+e.type+")। আবার চেষ্টা করুন।")})}
+function lvEnter(){var v=$("lpw").value.trim();if(!v)return;lvSha(v).then(function(x){if(x===LV_H){if(!ZPW)ZPW=v;$("lp").style.display="none";$("lq").style.display="";$("lt").textContent="ZA LIVE • লাইভ স্টুডিও";lvS("প্রথমে ক্যামেরা চালু করুন।");loadPeer();lvCam()}else{$("lpw").value="";$("lpw").placeholder=x===null?"https লিংকে খুলুন":"ভুল পাসওয়ার্ড, আবার দিন"}})}
+$("lok").onclick=lvEnter;$("lpw").onkeydown=function(e){if(e.key==="Enter")lvEnter()};$("lcx").onclick=lvClose;$("ldn").onclick=lvClose;
+$("lcam").onclick=lvCam;$("lgo").onclick=function(){if(lvLive)lvStop("লাইভ বন্ধ।");else lvStart()};
+$("lfl").onclick=function(){lvFace=lvFace==="user"?"environment":"user";lvCam()};
+$("lmc").onclick=function(){lvMic=!lvMic;if(lvStream)lvStream.getAudioTracks().forEach(function(t){t.enabled=lvMic});this.textContent="মাইক: "+(lvMic?"চালু":"বন্ধ")};
+function dvS(t){$("dst").textContent=t}
+function dvMm(s){s=Math.round(s||0);return Math.floor(s/60)+":"+("0"+s%60).slice(-2)}
+function dvOpen(){$("dm").classList.add("on");$("dp").style.display="";$("dq").style.display="none";$("dt").textContent="DVD";$("dpw").value="";$("dpw").placeholder="পাসওয়ার্ড দিন";dvS("");setTimeout(function(){$("dpw").focus()},50)}
+function dvClose(){$("dm").classList.remove("on");dvPw=""}
+function dvRender(){var b=$("dl");b.innerHTML="";dvL.forEach(function(x,i){var d=document.createElement("div");d.className="di";var s=document.createElement("span");s.textContent=x.title;var m=document.createElement("i");m.textContent=dvMm(x.d);
+function bt(t,f){var e=document.createElement("button");e.textContent=t;e.onclick=f;return e}
+d.appendChild(s);d.appendChild(m);d.appendChild(bt("↑",function(){dvMove(i,-1)}));d.appendChild(bt("↓",function(){dvMove(i,1)}));d.appendChild(bt("✕",function(){dvDel(i)}));b.appendChild(d)})}
+function dvMove(i,k){var j=i+k;if(j<0||j>=dvL.length)return;dvL.splice(j,0,dvL.splice(i,1)[0]);dvRender();gasPost({act:"dvd_put",videos:dvL.map(function(x){return{id:x.id,title:x.title}})}).then(function(r){dvL=r.videos;dvRender()}).catch(function(){dvS("সেভ হয়নি")})}
+function dvDel(i){if(!confirm("\""+dvL[i].title+"\" মুছবেন?"))return;gasPost({act:"dvd_del",id:dvL[i].id}).then(function(r){dvL=r.videos;dvRender();dvS("মোছা হয়েছে")}).catch(function(){dvS("মোছা যায়নি")})}
+$("dok").onclick=function(){var p=$("dpw").value.trim();if(!p)return;lvSha(p).then(function(x){if(x!==null&&x!==LV_H){$("dpw").value="";$("dpw").placeholder="ভুল পাসওয়ার্ড, আবার দিন";return}dvPw=p;if(!ZPW)ZPW=p;$("dp").style.display="none";$("dq").style.display="";$("dt").textContent="ZA DVD • ভিডিও আপলোড";
+if(!gasOn()){dvS("index.html-এ Apps Script লিংক বসানো হয়নি");return}
+fetch(GAS,{cache:"no-store"}).then(function(r){return r.json()}).then(function(r){dvL=r.videos||[];dvRender();dvS(dvL.length?"":"এখনো কোনো ভিডিও নেই")}).catch(function(){dvS("তালিকা আনা যায়নি")})})};
+$("dpw").onkeydown=function(e){if(e.key==="Enter")$("dok").onclick()};
+$("dcx").onclick=$("ddn").onclick=dvClose;$("dm").onclick=function(e){if(e.target.id==="dm")dvClose()};
+function dvDur(f){return new Promise(function(r){var v=document.createElement("video"),u=URL.createObjectURL(f);v.preload="metadata";v.onloadedmetadata=function(){URL.revokeObjectURL(u);r(Math.round(v.duration*10)/10||0)};v.onerror=function(){URL.revokeObjectURL(u);r(0)};v.src=u})}
+var upS=function(t){dvS(t)};
+function dvPut(f,url){var CS=8*1024*1024,sz=f.size,off=0;
+function one(a,t){return new Promise(function(ok,no){var e=Math.min(a+CS,sz),x=new XMLHttpRequest();x.open("PUT",url);x.setRequestHeader("Content-Range","bytes "+a+"-"+(e-1)+"/"+sz);
+x.upload.onprogress=function(ev){if(ev.lengthComputable)upS(f.name+": "+Math.round((a+ev.loaded)/sz*100)+"%")};
+x.onload=function(){if(x.status===308)ok({next:e});else if(x.status===200||x.status===201){var j=null;try{j=JSON.parse(x.responseText)}catch(er){}if(j&&j.id)ok({id:j.id});else no("noid")}else no(x.status)};
+x.onerror=function(){no(0)};x.send(f.slice(a,e))}).catch(function(er){if(t>=5)throw er;return new Promise(function(r){setTimeout(r,1500*(t+1))}).then(function(){return one(a,t+1)})})}
+function nx(){return one(off,0).then(function(r){if(r.id)return r.id;off=r.next;return nx()})}
+return nx()}
+function dvSave(f,title,d){upS(f.name+": শুরু হচ্ছে...");return gasPost({act:"dvd_init",name:f.name,type:f.type||"video/mp4",origin:location.origin}).then(function(r){if(!r.url)throw"init";return dvPut(f,r.url)}).then(function(id){return gasPost({act:"dvd_add",id:id,title:String(title).slice(0,80),d:d})}).then(function(r){dvL=r.videos;dvRender()})}
+function dvUp(f){if(!f.size)return Promise.reject(0);return dvDur(f).then(function(d){return dvSave(f,f.name.replace(/\.[^.]+$/,""),d)})}
+$("df").onchange=function(){var fs=[].slice.call(this.files),inp=this,i=0;if(!fs.length)return;
+(function nx(){if(i>=fs.length){inp.value="";dvS("আপলোড শেষ। ZA DVD চ্যানেলে চলবে।");return}var f=fs[i++];dvUp(f).then(nx).catch(function(c){inp.value="";dvS(f.name+" আপলোড হয়নি"+(c?" ("+c+")":""))})})()};
+var FIT=["contain","cover","fill"],FN=["Fit","Zoom","Full"],fi=ld("p2_fit",0);if(!(fi>=0&&fi<3))fi=0;
+function af(){video.style.objectFit=FIT[fi];$("bF").textContent="Screen: "+FN[fi]}
+$("bF").onclick=function(){fi=(fi+1)%3;sv("p2_fit",fi);af()};
+ap();af();rCats();rSrv();preLogos();rGrid();setTimeout(function lgGo(){if(cur&&video.readyState<3){setTimeout(lgGo,3000);return}if(window.requestIdleCallback)requestIdleCallback(loadLogos,{timeout:4000});else loadLogos()},2500);
+})();
+document.addEventListener("gesturestart",function(e){e.preventDefault()});document.addEventListener("wheel",function(e){if(e.ctrlKey)e.preventDefault()},{passive:false});
+</script>
+</body>
+</html>
